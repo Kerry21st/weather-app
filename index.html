@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Прогноз погоды</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <h1>Погода</h1>
+      <form id="search-form" class="search" autocomplete="off">
+        <input id="search-input" type="text" placeholder="Город, например: Москва" />
+        <button type="submit" aria-label="Найти">Найти</button>
+        <button type="button" id="geo-btn" title="Моё местоположение" aria-label="Моё местоположение">📍</button>
+      </form>
+    </header>
+
+    <div id="suggestions" class="suggestions hidden"></div>
+
+    <main id="content" class="content">
+      <p class="hint">Введите город или разрешите доступ к геолокации, чтобы увидеть прогноз.</p>
+    </main>
+
+    <div id="status" class="status hidden"></div>
+  </div>
+
+  <template id="tpl-current">
+    <section class="current">
+      <div class="current-main">
+        <div class="place"></div>
+        <div class="temp"></div>
+        <div class="desc"></div>
+      </div>
+      <div class="icon"></div>
+      <div class="details">
+        <div><span>Ощущается как</span><b class="feels"></b></div>
+        <div><span>Влажность</span><b class="humidity"></b></div>
+        <div><span>Ветер</span><b class="wind"></b></div>
+        <div><span>Давление</span><b class="pressure"></b></div>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-hourly-item">
+    <div class="hour-item">
+      <div class="h-time"></div>
+      <div class="h-icon"></div>
+      <div class="h-temp"></div>
+    </div>
+  </template>
+
+  <template id="tpl-day-item">
+    <div class="day-item">
+      <div class="d-name"></div>
+      <div class="d-icon"></div>
+      <div class="d-desc"></div>
+      <div class="d-temps"><b class="d-max"></b><span class="d-min"></span></div>
+    </div>
+  </template>
+
+  <template id="tpl-rec-item">
+    <div class="rec-item">
+      <div class="rec-icon"></div>
+      <div class="rec-text"></div>
+    </div>
+  </template>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
