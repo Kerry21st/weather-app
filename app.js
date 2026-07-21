@@ -164,9 +164,9 @@ async function loadWeather(lat, lon, placeName) {
     showStatus("Загрузка прогноза…");
     const url =
       `${FORECAST_URL}?latitude=${lat}&longitude=${lon}` +
-      `&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,surface_pressure,precipitation` +
+      `&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,surface_pressure,precipitation,is_day` +
       `&hourly=temperature_2m,weather_code,precipitation_probability` +
-      `&daily=weather_code,temperature_2m_max,temperature_2m_min` +
+      `&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset` +
       `&timezone=auto&forecast_days=7`;
     const data = await fetchJson(url);
     renderWeather(data, placeName, lat, lon);
@@ -275,6 +275,18 @@ async function initPrecipMap(lat, lon) {
 
 function renderWeather(data, placeName, lat, lon) {
   els.content.innerHTML = "";
+
+  // Атмосферный визуал и маскот: фон, погодные эффекты, реплика
+  if (window.Atmosphere) {
+    Atmosphere.update({
+      code: data.current.weather_code,
+      isDay: data.current.is_day === 1,
+      temp: data.current.temperature_2m,
+      now: data.current.time,
+      sunrise: data.daily.sunrise && data.daily.sunrise[0],
+      sunset: data.daily.sunset && data.daily.sunset[0],
+    });
+  }
 
   // Текущая погода
   const currentTpl = document.getElementById("tpl-current").content.cloneNode(true);
